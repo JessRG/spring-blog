@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <links th:replace="partials/head :: head"></links>
+</head>
+<body>
+    <div th:replace="partials/navbar :: navbar"></div>
+    <div th:replace="partials/header :: header"></div>
+
+    <div class="display-4">Actual roll: <span th:text="${rand}"></span></div>
+    <div class="display-4">Your Guess: <span th:text="${guess}"></span></div>
+    <div class="display-4"><span th:text="${result}"></span></div>
+
+    <footer th:replace="partials/footer :: footer"></footer>
+    <scripts th:replace="partials/scripts :: scripts"/>
+</body>
+</html>
