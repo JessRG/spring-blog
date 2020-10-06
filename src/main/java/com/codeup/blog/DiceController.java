@@ -21,7 +21,7 @@ public class DiceController {
         }
         model.addAttribute("rand", randNum);
         model.addAttribute("guess", n);
-        model.addAttribute("result", str);
+        model.addAttribute("message", str);
         model.addAttribute("title", "DiceRoll");
         return "diceResult";
     }
