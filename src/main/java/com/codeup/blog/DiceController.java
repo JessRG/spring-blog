@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class DiceController {
 
+    @GetMapping("/roll-dice")
+    public String rollDice() {
+        return "diceResult";
+    }
+
     @GetMapping("/roll-dice/{n}")
-    public String add(@PathVariable int n, Model model) {
+    public String roll(@PathVariable int n, Model model) {
         int randNum = (int) (Math.random() * 6) + 1;
         String str = "You did not guess the right roll.";
         if(n == randNum) {
@@ -17,6 +22,7 @@ public class DiceController {
         model.addAttribute("rand", randNum);
         model.addAttribute("guess", n);
         model.addAttribute("result", str);
-        return "dice";
+        model.addAttribute("title", "DiceRoll");
+        return "diceResult";
     }
 }

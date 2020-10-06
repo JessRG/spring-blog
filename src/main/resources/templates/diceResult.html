@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <links th:replace="partials/head :: head"></links>
+</head>
+<body>
+    <div th:replace="partials/navbar :: navbar"></div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="container">
+                <div th:replace="partials/header :: header"></div>
+
+                <div class="d-flex justify-content-around">
+                    <a href="/roll-dice/1">1</a>
+                    <a href="/roll-dice/2">2</a>
+                    <a href="/roll-dice/3">3</a>
+                    <a href="/roll-dice/4">4</a>
+                    <a href="/roll-dice/5">5</a>
+                    <a href="/roll-dice/6">6</a>
+                </div>
+
+                <h3 class="">Actual roll: <span th:text="${rand}"></span></h3>
+                <h3 class="">Your Guess: <span th:text="${guess}"></span></h3>
+                <h3 class=""><span th:text="${result}"></span></h3>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="partials/footer :: footer"></footer>
+    <scripts th:replace="partials/scripts :: scripts"/>
+</body>
+</html>
