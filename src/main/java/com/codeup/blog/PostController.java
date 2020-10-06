@@ -11,11 +11,11 @@ public class PostController {
 
     @GetMapping("/posts")
 //    @ResponseBody
-    public String posts(Model model) {
+    public String showAllPosts(Model model) {
         ArrayList<Post> posts = new ArrayList<>();
 
-        posts.add(new Post("First Blog Post", "This is the body of the First Post."));
-        posts.add(new Post("Second Blog Post", "This is the body of the Second Post."));
+        posts.add(new Post(1, "First Blog Post", "This is the body of the First Post."));
+        posts.add(new Post(2, "Second Blog Post", "This is the body of the Second Post."));
 
         model.addAttribute("posts", posts);
         return "posts/index";
@@ -23,7 +23,7 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
 //    @ResponseBody
-    public String postsId(@PathVariable int id, Model model) {
+    public String showOnePost(@PathVariable long id, Model model) {
         Post newPost = new Post();
 
         newPost.setTitle("Blog Post #1");
@@ -31,6 +31,7 @@ public class PostController {
 
         // pass post to the show page
         model.addAttribute("newPost", newPost);
+        model.addAttribute("pgTitle", "Individual Post");
         return "posts/show";
     }
 

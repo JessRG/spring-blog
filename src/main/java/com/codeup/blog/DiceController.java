@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.*;
 public class DiceController {
 
     @GetMapping("/roll-dice")
-    public String rollDice() {
+    public String showDiceForm() {
         return "diceResult";
     }
 
     @GetMapping("/roll-dice/{n}")
     public String roll(@PathVariable int n, Model model) {
         int randNum = (int) (Math.random() * 6) + 1;
-        String str = "You did not guess the right roll.";
+        String msg = "You did not guess the right number.";
         if(n == randNum) {
-            str = "You guessed the roll right!!!";
+            msg = "You guessed the number right!!!";
         }
         model.addAttribute("rand", randNum);
         model.addAttribute("guess", n);
-        model.addAttribute("message", str);
+        model.addAttribute("message", msg);
         model.addAttribute("title", "DiceRoll");
         return "diceResult";
     }

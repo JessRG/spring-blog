@@ -2,12 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${pgTitle}"></title>
+    <links th:replace="partials/head :: head"></links>
 </head>
 <body>
     <div class="container">
-        <div th:text="${newPost.title}"></div>
-        <div th:text="${newPost.body}"></div>
+        <div class="card w-75">
+            <div class="card-body">
+                <div class="card-title" th:text="${newPost.title}"></div>
+                <div class="card-text" th:text="${newPost.body}"></div>
+            </div>
+        </div>
     </div>
+
+    <footer th:replace="partials/footer :: footer"></footer>
+    <scripts th:replace="partials/scripts :: scripts"/>
 </body>
 </html>
