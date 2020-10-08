@@ -19,33 +19,48 @@ public class PostController {
 
     @GetMapping("/posts")
     public String showAllPosts(Model model) {
-        ArrayList<Post> posts = new ArrayList<>();
-
         model.addAttribute("posts", postRepo.findAll());
-        model.addAttribute("posts", posts);
         return "posts/index";
     }
 
-    @GetMapping("/posts/{id}")
-    public String showOnePost(@PathVariable long id, Model model) {
-//        Post newPost = new Post();
-        Post post = postRepo.findPostById(id);
+    @PostMapping("/posts")
+    public String showOnePost(@RequestParam(name = "id") String id, Model model) {
+        Post post = postRepo.findById(Long.parseLong(id));
 
         // pass post to the show page
-//        model.addAttribute("post", newPost);
+        model.addAttribute("post", post);
         model.addAttribute("pgTitle", "Individual Post");
         return "posts/show";
     }
 
-    @GetMapping("/posts/create")
-    @ResponseBody
-    public String postsCreate() {
-        return "show";
+    @GetMapping("/posts/update")
+    public String editPost(@RequestParam(name="id") String id, Model model) {
+        Post editPost = postRepo.findById(Long.parseLong(id));
+        model.addAttribute("editPost", editPost);
+        return "posts/update";
     }
 
-    @PostMapping("/posts/create")
-    @ResponseBody
-    public String postsCreatePost() {
-        return "create a new post";
+    @PostMapping("/posts/update")
+    public String updatePost(@RequestParam(name = "title") String title,
+                             @RequestParam(name = "body") String body,
+                             @RequestParam(name = "id") String id) {
+        long updateId = Long.parseLong(id);
+        Post updatePost = new Post(updateId, title, body);
+
+        // update post
+        postRepo.save(updatePost);
+        return "posts/index";
     }
+
+//    @GetMapping("/posts/create")
+//    @ResponseBody
+//    public String postsCreate() {
+//        return "show";
+//    }
+
+//    @PostMapping("/posts/create")
+//    @ResponseBody
+//    public String postsCreatePost() {
+//        return "create a new post";
+//    }
 }

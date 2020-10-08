@@ -13,8 +13,8 @@
             <div class="card-body">
                 <div class="card-title" th:text="${post.title}"></div>
                 <div class="card-text" th:text="${post.body}"></div>
-                <form action="/posts/1">
-                    <button type="submit" href="/posts/" class="btn btn-primary">Button</button>
+                <form th:action="@{/posts}" th:object="${post}" method="post">
+                    <button type="submit" class="btn btn-primary" name="id" th:value="*{id}">Button</button>
                 </form>
             </div>
         </div>

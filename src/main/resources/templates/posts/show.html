@@ -11,6 +11,9 @@
             <div class="card-body">
                 <div class="card-title" th:text="${post.title}"></div>
                 <div class="card-text" th:text="${post.body}"></div>
+                <form th:action="@{/posts/update}" th:object="${post}" method="get">
+                    <button type="submit" name="id" th:value="*{id}">Edit</button>
+                </form>
             </div>
         </div>
     </div>
