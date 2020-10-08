@@ -1,5 +1,6 @@
 package com.codeup.blog;
 
+import com.codeup.blog.repository.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,28 +10,29 @@ import java.util.ArrayList;
 @Controller
 public class PostController {
 
+    // Inject repository instance (dependency injection)
+    private PostRepository postRepo;
+
+    public PostController(PostRepository postRepo) {
+        this.postRepo = postRepo;
+    }
+
     @GetMapping("/posts")
-//    @ResponseBody
     public String showAllPosts(Model model) {
         ArrayList<Post> posts = new ArrayList<>();
 
-        posts.add(new Post(1, "First Blog Post", "This is the body of the First Post."));
-        posts.add(new Post(2, "Second Blog Post", "This is the body of the Second Post."));
-
+        model.addAttribute("posts", postRepo.findAll());
         model.addAttribute("posts", posts);
         return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
-//    @ResponseBody
     public String showOnePost(@PathVariable long id, Model model) {
-        Post newPost = new Post();
-
-        newPost.setTitle("Blog Post #1");
-        newPost.setBody("This is the body of First Blog.");
+//        Post newPost = new Post();
+        Post post = postRepo.findPostById(id);
 
         // pass post to the show page
-        model.addAttribute("newPost", newPost);
+//        model.addAttribute("post", newPost);
         model.addAttribute("pgTitle", "Individual Post");
         return "posts/show";
     }
