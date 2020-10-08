@@ -43,12 +43,14 @@ public class PostController {
     @PostMapping("/posts/update")
     public String updatePost(@RequestParam(name = "title") String title,
                              @RequestParam(name = "body") String body,
-                             @RequestParam(name = "id") String id) {
+                             @RequestParam(name = "id") String id,
+                             Model model) {
         long updateId = Long.parseLong(id);
         Post updatePost = new Post(updateId, title, body);
 
         // update post
         postRepo.save(updatePost);
+        model.addAttribute("posts", postRepo.findAll());
         return "posts/index";
     }
 
