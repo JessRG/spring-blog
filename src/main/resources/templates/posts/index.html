@@ -11,11 +11,16 @@
     <div class="container">
         <div class="card w-75" th:each="post : ${posts}">
             <div class="card-body">
-                <div class="card-title" th:text="${post.title}"></div>
-                <div class="card-text" th:text="${post.body}"></div>
-                <form th:action="@{/posts}" th:object="${post}" method="post">
-                    <button type="submit" class="btn btn-primary" name="id" th:value="*{id}">Button</button>
+                <div class="card-title"><h2 th:text="${post.title}"></h2></div>
+                <div class="card-text"><p th:text="${post.body}"></p></div>
+                <form th:action="@{'/posts/' + ${post.id}}" method="get">
+                    <button type="submit" class="btn btn-primary">View</button>
                 </form>
+                <form th:action="@{'/posts/delete/' + ${post.id}}" method="get">
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </form>
+                <br>
+                <br>
             </div>
         </div>
     </div>

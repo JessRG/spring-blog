@@ -2,17 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${pgTitle}"></title>
+    <title>Show Post</title>
     <links th:replace="partials/head :: head"></links>
 </head>
 <body>
+    <div th:replace="partials/navbar :: navbar"></div>
     <div class="container">
         <div class="card w-75">
             <div class="card-body">
                 <div class="card-title" th:text="${post.title}"></div>
                 <div class="card-text" th:text="${post.body}"></div>
-                <form th:action="@{/posts/update}" th:object="${post}" method="get">
-                    <button type="submit" name="id" th:value="*{id}">Edit</button>
+                <div class="card-text" th:text="${owner.email}"></div>
+<!--                <div class="card-text" th:text="${checkpw}"></div>-->
+<!--                <div class="card-text" th:text="${owner.password}"></div>-->
+                <form th:action="@{'/posts/update/' + ${post.id}}" method="get">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+                <form th:action="@{'/posts/delete/' + ${post.id}}" method="get">
+                    <button type="submit" class="btn btn-primary">Delete</button>
                 </form>
             </div>
         </div>

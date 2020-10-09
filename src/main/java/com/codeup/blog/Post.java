@@ -16,6 +16,10 @@ public class Post {
     @Column
     private String body;
 
+    @ManyToOne
+    @JoinColumn (name = "user_id")
+    private User user;
+
     // Default Constructor
     public Post() {
     }
@@ -27,6 +31,7 @@ public class Post {
         this.body = body;
     }
 
+    // Getters and Setters
     public long getId() {
         return id;
     }
@@ -49,5 +54,13 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

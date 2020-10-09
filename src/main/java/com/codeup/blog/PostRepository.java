@@ -1,4 +1,4 @@
-package com.codeup.blog.repository;
+package com.codeup.blog;
 
 import com.codeup.blog.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAll(); // select * from posts
-    Post findById(long id); // select * from posts where id = ?
-    Post save(Post post);
-    void delete(Post p);
+    Post getPostById(long id); // select * from posts where id = ?
+    Post saveAndFlush(Post post); // update posts set body = ?, title = ? where id = ?
+    void delete(Post post);
 }
