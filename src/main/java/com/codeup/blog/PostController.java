@@ -20,6 +20,7 @@ public class PostController {
     @GetMapping("/posts")
     public String showAllPosts(Model model) {
         model.addAttribute("posts", postRepo.findAll());
+        model.addAttribute("pgTitle", "All Posts");
 //        String hash = BCrypt.hashpw("user1password", BCrypt.gensalt());
 //        System.out.println(hash);
 //        hash = BCrypt.hashpw("user2password", BCrypt.gensalt());
@@ -37,23 +38,25 @@ public class PostController {
         Post post = postRepo.findById(id).orElse(null);
         User owner = post.getUser();
         boolean checkpw = BCrypt.checkpw("user1password", owner.getPassword());
+        model.addAttribute("pgTitle", "Individual Post Page");
         model.addAttribute("post", post);
         model.addAttribute("owner", owner);
         model.addAttribute("checkpw", checkpw);
         return "posts/show";
     }
 
-    @GetMapping("/posts/create")
-    public String createPostForm() {
+    @GetMapping("/posts/newPost")
+    public String createPostForm(Model model) {
+        model.addAttribute("pgTitle", "Create Post");
         return "posts/create";
     }
 
-    @PostMapping("/posts/create")
+    @PostMapping("/posts/newPost")
     public String createPost(@RequestParam(name="title") String title,
                              @RequestParam(name="body") String body,
                              Model model) {
         if (title == null || body == null) {
-            return "redirect:/posts/create";
+            return "redirect:/posts/newPost";
         }
         Post post = new Post();
         long randomUser = (long) (Math.random() * 3) + 1;
@@ -78,8 +81,9 @@ public class PostController {
     public String editPost(@PathVariable long id, Model model) {
         Post post = postRepo.findById(id).orElse(null);
         if (post == null) {
-            return "redirect:/posts/index";
+            return "redirect:/posts";
         }
+        model.addAttribute("pgTitle", "Edit Post");
         model.addAttribute("post", post);
         return "posts/update";
     }
@@ -91,7 +95,7 @@ public class PostController {
                              Model model) {
         Post post = postRepo.findById(id).orElse(null);
         if (post == null) {
-            return "redirect:/posts/index";
+            return "redirect:/posts";
         }
         post.setTitle(title);
         post.setBody(body);
