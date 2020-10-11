@@ -34,7 +34,7 @@ public class PostController {
         if (id == 0) {
             return "redirect:/posts";
         }
-        Post post = postRepo.getPostById(id);
+        Post post = postRepo.findById(id).orElse(null);
         User owner = post.getUser();
         boolean checkpw = BCrypt.checkpw("user1password", owner.getPassword());
         model.addAttribute("post", post);
@@ -57,7 +57,7 @@ public class PostController {
         }
         Post post = new Post();
         long randomUser = (long) (Math.random() * 3) + 1;
-        User user = userRepo.getOne(randomUser);
+        User user = userRepo.findById(randomUser).orElse(null);
         post.setTitle(title);
         post.setBody(body);
         post.setUser(user);
@@ -67,16 +67,16 @@ public class PostController {
 
     @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable long id) {
-        Post post = postRepo.getPostById(id);
+        Post post = postRepo.findById(id).orElse(null);
         if(post != null) {
-            postRepo.delete(post);
+            postRepo.deleteById(post.getId());
         }
         return "redirect:/posts";
     }
 
     @GetMapping("/posts/update/{id}")
     public String editPost(@PathVariable long id, Model model) {
-        Post post = postRepo.getPostById(id);
+        Post post = postRepo.findById(id).orElse(null);
         if (post == null) {
             return "redirect:/posts/index";
         }
@@ -89,7 +89,7 @@ public class PostController {
                              @RequestParam(name="title") String title,
                              @RequestParam(name="body") String body,
                              Model model) {
-        Post post = postRepo.getPostById(id);
+        Post post = postRepo.findById(id).orElse(null);
         if (post == null) {
             return "redirect:/posts/index";
         }

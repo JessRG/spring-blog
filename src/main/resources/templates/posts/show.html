@@ -15,12 +15,14 @@
                 <div class="card-text" th:text="${owner.email}"></div>
 <!--                <div class="card-text" th:text="${checkpw}"></div>-->
 <!--                <div class="card-text" th:text="${owner.password}"></div>-->
-                <form th:action="@{'/posts/update/' + ${post.id}}" method="get">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form>
-                <form th:action="@{'/posts/delete/' + ${post.id}}" method="get">
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </form>
+                <div class="d-flex">
+                    <form th:action="@{'/posts/update/' + ${post.id}}" method="get">
+                        <button type="submit" class="btn btn-primary mr-1">Edit</button>
+                    </form>
+                    <form th:action="@{'/posts/delete/' + ${post.id}}" method="get">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

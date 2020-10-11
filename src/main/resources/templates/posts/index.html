@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>All Posts</title>
-    <links th:replace="partials/head :: head"></links>
-</head>
+
+<head th:include="partials/head :: head"></head>
 <body>
     <div th:replace="partials/navbar :: navbar"></div>
     <div th:replace="partials/header :: header"></div>
 
     <div class="container">
-        <div class="card w-75" th:each="post : ${posts}">
+        <div class="card w-75 mb-3" th:each="post : ${posts}">
             <div class="card-body">
                 <div class="card-title"><h2 th:text="${post.title}"></h2></div>
                 <div class="card-text"><p th:text="${post.body}"></p></div>
-                <form th:action="@{'/posts/' + ${post.id}}" method="get">
-                    <button type="submit" class="btn btn-primary">View</button>
-                </form>
-                <form th:action="@{'/posts/delete/' + ${post.id}}" method="get">
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </form>
-                <br>
-                <br>
+                <div class="d-flex">
+                    <form th:action="@{'/posts/' + ${post.id}}" method="get">
+                        <button type="submit" class="btn btn-primary mr-1">View</button>
+                    </form>
+                    <form th:action="@{'/posts/delete/' + ${post.id}}" method="get">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
