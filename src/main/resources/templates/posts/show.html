@@ -13,7 +13,7 @@
 <!--                <div class="card-text" th:text="${checkpw}"></div>-->
 <!--                <div class="card-text" th:text="${owner.password}"></div>-->
                 <div class="d-flex">
-                    <form th:action="@{'/posts/update/' + ${post.id}}" method="get">
+                    <form th:action="@{'/posts/'+ ${post.id} +'/edit'}" method="get">
                         <button type="submit" class="btn btn-primary mr-1">Edit</button>
                     </form>
                     <form th:action="@{'/posts/delete/' + ${post.id}}" method="get">

@@ -7,16 +7,18 @@
 <div th:replace="partials/header :: header"></div>
 
 <div class="container">
-    <form th:action="@{'/posts/update'}" method="post">
+    <form th:action="@{'/posts/'+ ${post.id} +'/edit'}" th:object="${post}" method="post">
+        <input type="text" id="id" class="d-none" th:field="*{id}"/>
+        <input type="text" name="userId" class="d-none" th:field="*{user.id}"/>
         <label for="title"> Title: </label>
         <br>
-        <input type="text" name="title" id="title" th:field="${post.title}"/>
+        <input type="text" id="title" th:field="*{title}"/>
         <br>
         <label for="body"> Description: </label>
         <br>
-        <textarea name="body" id="body" col="72" rows="4" th:field="${post.body}"></textarea>
+        <textarea id="body" col="72" rows="4" th:field="*{body}"></textarea>
         <br>
-        <button type="submit" name="id" th:value="${post.id}">Done!</button>
+        <button type="submit">Done!</button>
     </form>
 </div>
 

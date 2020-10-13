@@ -32,9 +32,6 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String showOnePost(@PathVariable long id, Model model) {
-        if (id == 0) {
-            return "redirect:/posts";
-        }
         Post post = postRepo.findById(id).orElse(null);
         User owner = post.getUser();
         boolean checkpw = BCrypt.checkpw("user1password", owner.getPassword());
@@ -45,24 +42,18 @@ public class PostController {
         return "posts/show";
     }
 
-    @GetMapping("/posts/newPost")
+    @GetMapping("/posts/create")
     public String createPostForm(Model model) {
         model.addAttribute("pgTitle", "Create Post");
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
-    @PostMapping("/posts/newPost")
-    public String createPost(@RequestParam(name="title") String title,
-                             @RequestParam(name="body") String body,
+    @PostMapping("/posts/create")
+    public String createPost(@ModelAttribute Post post,
                              Model model) {
-        if (title == null || body == null) {
-            return "redirect:/posts/newPost";
-        }
-        Post post = new Post();
         long randomUser = (long) (Math.random() * 3) + 1;
         User user = userRepo.findById(randomUser).orElse(null);
-        post.setTitle(title);
-        post.setBody(body);
         post.setUser(user);
         postRepo.save(post);
         return "redirect:/posts/" + post.getId();
@@ -77,7 +68,7 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts/update/{id}")
+    @GetMapping("/posts/{id}/edit")
     public String editPost(@PathVariable long id, Model model) {
         Post post = postRepo.findById(id).orElse(null);
         if (post == null) {
@@ -88,17 +79,8 @@ public class PostController {
         return "posts/update";
     }
 
-    @PostMapping("/posts/update")
-    public String updatePost(@RequestParam(name="id") long id,
-                             @RequestParam(name="title") String title,
-                             @RequestParam(name="body") String body,
-                             Model model) {
-        Post post = postRepo.findById(id).orElse(null);
-        if (post == null) {
-            return "redirect:/posts";
-        }
-        post.setTitle(title);
-        post.setBody(body);
+    @PostMapping("/posts/{id}/edit")
+    public String updatePost(@ModelAttribute("post") Post post) {
         postRepo.save(post);
         return "redirect:/posts/" + post.getId();
     }
