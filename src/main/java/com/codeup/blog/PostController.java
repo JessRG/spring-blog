@@ -57,7 +57,11 @@ public class PostController {
         long randomUser = (long) (Math.random() * 3) + 1;
         User user = userRepo.findById(randomUser).orElse(null);
         post.setUser(user);
-        emailSvc.prepareAndSend(post, post.getTitle(), post.getBody());
+        if (post.getId() == 0) {
+            emailSvc.prepareAndSend(post,
+                    "Created Post: " + post.getTitle(),
+                    post.getTitle() + "\n\n" + post.getBody());
+        }
         postRepo.save(post);
         return "redirect:/posts/" + post.getId();
     }
