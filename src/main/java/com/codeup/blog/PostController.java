@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     // Inject post repository instance (dependency injection)
-    private PostRepository postRepo;
-    private UserRepository userRepo;
+    private final PostRepository postRepo;
+    private final UserRepository userRepo;
+    private final EmailService emailSvc;
 
-    public PostController(PostRepository postRepo, UserRepository userRepo) {
+    public PostController(PostRepository postRepo, UserRepository userRepo, EmailService emailSvc) {
         this.postRepo = postRepo;
         this.userRepo = userRepo;
+        this.emailSvc = emailSvc;
     }
 
     @GetMapping("/posts")
@@ -55,6 +57,7 @@ public class PostController {
         long randomUser = (long) (Math.random() * 3) + 1;
         User user = userRepo.findById(randomUser).orElse(null);
         post.setUser(user);
+        emailSvc.prepareAndSend(post, post.getTitle(), post.getBody());
         postRepo.save(post);
         return "redirect:/posts/" + post.getId();
     }
