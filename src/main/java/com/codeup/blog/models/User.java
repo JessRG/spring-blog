@@ -73,9 +73,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-        System.out.println(hash);
-        this.password = hash;
+        this.password = password;
     }
 
     public List<Post> getPosts() {
