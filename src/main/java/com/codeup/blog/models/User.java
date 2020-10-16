@@ -1,4 +1,4 @@
-package com.codeup.blog;
+package com.codeup.blog.models;
 
 import org.mindrot.jbcrypt.BCrypt;
 import javax.persistence.*;
@@ -30,9 +30,17 @@ public class User {
     // Constructor
     public User(long id, String username, String email, String password) {
         this.id = id;
-        this.username = username;
         this.email = email;
+        this.username = username;
         this.password = password;
+    }
+
+    // Copy Constructor
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
     }
 
     // Getters and Setters

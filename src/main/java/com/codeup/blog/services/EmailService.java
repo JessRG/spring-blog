@@ -1,5 +1,6 @@
-package com.codeup.blog;
+package com.codeup.blog.services;
 
+import com.codeup.blog.models.Post;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.mail.*;
 import org.springframework.mail.javamail.JavaMailSender;

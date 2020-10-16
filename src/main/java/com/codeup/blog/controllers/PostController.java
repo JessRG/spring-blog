@@ -1,5 +1,10 @@
-package com.codeup.blog;
+package com.codeup.blog.controllers;
 
+import com.codeup.blog.models.Post;
+import com.codeup.blog.models.User;
+import com.codeup.blog.repositories.PostRepository;
+import com.codeup.blog.repositories.UserRepository;
+import com.codeup.blog.services.EmailService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +28,6 @@ public class PostController {
     public String showAllPosts(Model model) {
         model.addAttribute("posts", postRepo.findAll());
         model.addAttribute("pgTitle", "All Posts");
-//        String hash = BCrypt.hashpw("user1password", BCrypt.gensalt());
-//        System.out.println(hash);
-//        hash = BCrypt.hashpw("user2password", BCrypt.gensalt());
-//        System.out.println(hash);
-//        hash = BCrypt.hashpw("user3password", BCrypt.gensalt());
-//        System.out.println(hash);
         return "posts/index";
     }
 
