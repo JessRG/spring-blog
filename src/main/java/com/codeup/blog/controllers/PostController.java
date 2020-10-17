@@ -6,8 +6,12 @@ import com.codeup.blog.repositories.PostRepository;
 import com.codeup.blog.repositories.UserRepository;
 import com.codeup.blog.services.EmailService;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration;
+import org.springframework.security.core.SpringSecurityCoreVersion;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.SpringServletContainerInitializer;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -53,9 +57,11 @@ public class PostController {
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post,
                              Model model) {
-        long randomUser = (long) (Math.random() * 3) + 1;
-        User user = userRepo.findById(randomUser).orElse(null);
-        post.setUser(user);
+//        long randomUser = (long) (Math.random() * 3) + 1;
+//        User user = userRepo.findById(randomUser).orElse(null);
+//        post.setUser(user);
+        User thisAuthor = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setUser(thisAuthor);
         if (post.getId() == 0) {
             emailSvc.prepareAndSend(post,
                     "Created Post: " + post.getTitle(),
