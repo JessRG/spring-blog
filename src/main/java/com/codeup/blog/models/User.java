@@ -1,5 +1,7 @@
 package com.codeup.blog.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mindrot.jbcrypt.BCrypt;
 import javax.persistence.*;
 import java.util.List;
@@ -19,9 +21,11 @@ public class User {
     private String email;
 
     @Column(nullable = false, length = 250)
+    @JsonIgnore
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonBackReference
     private List<Post> posts;
 
     // Default Constructor

@@ -1,9 +1,12 @@
-footer {
+
+.footer {
     position: fixed;
-    width: 100%;
-    left: 0;
     bottom: 0;
-    background-color: darkred;
-    color: white;
-    text-align: center;
+    height: 35px;
+    width: 100%;
+    background-color: grey;
+    /*text-align: center;*/
 }
+
+.footer > .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
+.footer > .navbar {min-height:32px !important}
