@@ -1,0 +1,4 @@
+(function($) {
+
+    $('#posts').DataTable();
+})(jQuery);

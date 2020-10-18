@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.SpringServletContainerInitializer;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class PostController {
 
@@ -33,6 +35,16 @@ public class PostController {
         model.addAttribute("posts", postRepo.findAll());
         model.addAttribute("pgTitle", "All Posts");
         return "posts/index";
+    }
+
+    @GetMapping("/posts.json")
+    public @ResponseBody List<Post> viewAllPostsInJSONFormat() {
+        return postRepo.findAll();
+    }
+
+    @GetMapping("/posts/ajax")
+    public String viewAllPostsWithAjax() {
+        return "posts/ajax";
     }
 
     @GetMapping("/posts/{id}")
@@ -60,6 +72,8 @@ public class PostController {
 //        long randomUser = (long) (Math.random() * 3) + 1;
 //        User user = userRepo.findById(randomUser).orElse(null);
 //        post.setUser(user);
+
+        // Get the currently logged in user and save their ID as the author of this post
         User thisAuthor = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(thisAuthor);
         if (post.getId() == 0) {
